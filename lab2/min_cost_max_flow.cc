@@ -4,6 +4,10 @@
 #include <iostream>
 #include <unordered_map>
 
+/*
+* This does not work, problem with dijksra probably
+*/
+
 using namespace std;
 
 const int INF = numeric_limits<int>::max();
