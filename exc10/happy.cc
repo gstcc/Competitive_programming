@@ -3,7 +3,9 @@
 #include <string>
 #include <unordered_set>
 
-vector<int> find_all_primes(int limit = 10000000) {
+using namespace std;
+
+vector<int> find_all_primes(int limit) {
     vector<int> primes;
     vector<int> spf(limit, 0);
     for (int i = 2; i < limit; i++) {
@@ -22,9 +24,9 @@ vector<int> find_all_primes(int limit = 10000000) {
 int sumOfSquares(int n) {
     int sum = 0;
     while (n > 0) {
-        int digit = n % 10;     // Get the last digit
-        sum += digit * digit;   // Square and add
-        n /= 10;                // Remove the last digit
+        int digit = n % 10;    
+        sum += digit * digit;  
+        n /= 10;                
     }
     return sum;
 }
@@ -45,13 +47,15 @@ int main() {
         }
         unordered_set<int> visited;
         int tmp = m;
-        while(tmp!=1 || !visited.count(tmp)) {
-            tmp = sumOfSquares(tmp);
+        while(tmp!=1 && !visited.contains(tmp)) {
             visited.insert(tmp);
+            tmp = sumOfSquares(tmp);
         }
         if (tmp==1) {
-
-        } else {}
+            std::cout << K << " " << m << " " << "YES" << std::endl;
+        } else {
+            std::cout << K << " " << m << " " << "NO" << std::endl;
+        }
 
         
     }
