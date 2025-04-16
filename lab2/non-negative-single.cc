@@ -15,9 +15,9 @@
 using namespace std;
 
 /*Find the distance between s and all nodes, the queries are then just lookups*/
-void dijkstra(vector<int>& price_to_reach_nodes, unordered_map<int, vector<pair<int, int>>>& outgoing_edges, int start, int n) {
+void dijkstra(vector<int>& price_to_reach_nodes, unordered_map<int, vector<pair<int, int>>>& outgoing_edges, int start, int n, vector<int>& parent) {
     std::priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq; // Min heap
-    
+
     // Initialize distances
     price_to_reach_nodes.assign(n, INT_MAX);
     price_to_reach_nodes[start] = 0;
@@ -36,6 +36,7 @@ void dijkstra(vector<int>& price_to_reach_nodes, unordered_map<int, vector<pair<
 
             if (new_cost < price_to_reach_nodes[neighbor]) {
                 price_to_reach_nodes[neighbor] = new_cost;
+                parent[neighbor] = node; // Keep track of parent, so we can reconstruct path
                 pq.push({new_cost, neighbor}); // Push updated cost
             }
         }
@@ -55,8 +56,9 @@ int main() {
             // outgoing_edges[v].push_back({u, w});
         }
         vector<int> price_to_reach_nodes(n, INT_MAX);
+        vector<int> parent(n, -1);
         // price_to_reach_nodes[s] = 0;
-        dijkstra(price_to_reach_nodes, outgoing_edges, s, n);
+        dijkstra(price_to_reach_nodes, outgoing_edges, s, n, parent);
         int node;
         stringstream output;
         for(int i=0; i<q; i++) {
