@@ -1,3 +1,12 @@
+
+/*
+* Note: Using the same function build_suffix_array from problem c in this lab
+* Gustav Carlsson (gusca083)
+* Time complexity O(nlog(n)), space O(n)
+* Builds the suffix array in lexiographically sorted order, then just queries
+* the suffix in index q
+* Finds the starting position of the qi’th smallest suffix of s
+*/
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -23,7 +32,6 @@ auto build_suffix_array(const string& s) {
             int rb = (b + k < n) ? rank[b + k] : -1;
             return ra < rb;
         };
-
         sort(sa.begin(), sa.end(), cmp);
 
         temp[sa[0]] = 0;
@@ -50,3 +58,4 @@ int main() {
 
     }
 }
+

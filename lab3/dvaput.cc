@@ -1,3 +1,14 @@
+/*
+* Gustav Carlsson (gusca083)
+* Time complexity O(nlog(n))
+* Memory complexity O(n)
+* Finds the longest substring appearing twice in a given string
+* Builds a suffix array, containing a the string index of a sufix 
+* sorted in lexicographically order.
+* Then builds the longest common prefix array (lcp) and returns maximum value
+* found in the array
+*/
+
 #include <iostream>
 #include <string>
 #include <vector>
