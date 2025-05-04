@@ -1,4 +1,3 @@
-
 /*
 * Note: Using the same function build_suffix_array from problem c in this lab
 * Gustav Carlsson (gusca083)
