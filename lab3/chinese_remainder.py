@@ -20,17 +20,24 @@ def euclidean(a, n):
 
     return x1
 
+# Calculates the chinese remainder of two coprime numbers a1, a2 modulo n1, n2
+def chinese_remainder(a1, n1, a2, n2):
+    M = n1 * n2
+    m1 = M // n1
+    m2 = M // n2
+    m1p = euclidean(m1, n1)
+    m2p = euclidean(m2, n2)
+    x = ((a1 * m1 % M) * m1p + (a2 * m2 % M) * m2p) % M
+    return x, M
+    
+ 
+
 def main():
     T = int(input())
     for _ in range(T):
         a1, n1, a2, n2 = map(int, input().split())
-        M = n1 * n2
-        m1 = M // n1
-        m2 = M // n2
-        m1p = euclidean(m1, n1)
-        m2p = euclidean(m2, n2)
-        x = ((a1 * m1 % M) * m1p + (a2 * m2 % M) * m2p) % M
-        print(x, M)
+        x, M = chinese_remainder(a1, n1, a2, n2)
+       print(x, M)
 
 if __name__ == "__main__":
     main()

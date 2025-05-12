@@ -24,8 +24,11 @@ struct pair_hash {
     }
 };
 
-bool find_smallest_covering(vector<int>& indexes, double left_bound, double right_bound, vector<pair<double, double>>& intervals, int n) {
+// returns a pair of bool and vector<int> indicating if it's possible covering the interval, the vector contains the indexes of the smallest 
+// intervals needed to cover the interval
+pair<bool, vector<int>> find_smallest_covering(double left_bound, double right_bound, vector<pair<double, double>>& intervals, int n) {
     double max_right;
+    vector<int> indexes;
     int max_index;
     int previous = 0;
 
@@ -47,7 +50,7 @@ bool find_smallest_covering(vector<int>& indexes, double left_bound, double righ
         }
 
         if (max_index == -1) { //None found, impossible
-            return false;
+            return {false, indexes};
         }
 
         indexes.push_back(max_index);
@@ -55,11 +58,11 @@ bool find_smallest_covering(vector<int>& indexes, double left_bound, double righ
         ++previous;
 
         if (right_bound <= left_bound) {
-            return true;
+            return {true, indexes};
             // break;
         }
     }
-    return false;
+    return {false, indexes};
 }
 
 int main() {
@@ -71,19 +74,19 @@ int main() {
         //Use map for faster reconstruction of final indexes after sorting
         std::unordered_map<std::pair<double, double>, int, pair_hash> original_indexes;
         double lhs, rhs;
-        bool found = false;
+        bool done = false;
         for (int i = 0; i < n; i++) {
             cin >> lhs >> rhs;
             auto el = make_pair(lhs, rhs);
             intervals.push_back(el);
             original_indexes[el] = i;
-            if (lhs <= left_bound && right_bound <= rhs && !found) {
-                found = true;
+            if (lhs <= left_bound && right_bound <= rhs && !done) {
+                done = true;
                 cout << 1 << endl << intervals.size()-1 << endl;
             }
         }
 
-        if (found) { //single interval found, this will always be best
+        if (done) { //single interval found, this will always be best
             continue;
         } 
         
@@ -94,8 +97,7 @@ int main() {
                 return lh.second < rh.second;
             }
         });
-        vector<int> indexes;
-        found = find_smallest_covering(indexes, left_bound, right_bound, intervals, n);
+        auto [found, indexes] = find_smallest_covering(left_bound, right_bound, intervals, n);
 
         // If solution is found, print the results
         if (found) {
